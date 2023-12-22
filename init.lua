@@ -65,7 +65,7 @@ require('lazy').setup({
         icons = {
           show = {
             file = true,
-            folder = true,
+            folder = false,
             folder_arrow = true,
             git = false,
           },
@@ -73,6 +73,12 @@ require('lazy').setup({
       },
     },
     cmd = "NvimTreeToggle"
+  },
+  {
+    'romgrk/barbar.nvim',
+    opts = {
+      animation = false,
+    },
   },
 
   -- IDE
@@ -146,6 +152,7 @@ lspconfig.dartls.setup({
     dart = { lineLength = 120 }
   }
 })
+lspconfig.gopls.setup({})
 
 local cmp = require('cmp')
 cmp.setup({
@@ -231,6 +238,10 @@ keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
+
+keymap('n', '<tab>', ':BufferNext<CR>', opts)
+keymap('n', '<S-tab>', ':BufferPrevious<CR>', opts)
+keymap('n', '<leader>q', ':BufferClose<CR>', opts)
 
 keymap('n', 'K', vim.lsp.buf.hover, opts)
 keymap('n', 'J', vim.diagnostic.open_float, opts)
