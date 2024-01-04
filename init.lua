@@ -74,12 +74,12 @@ require('lazy').setup({
     },
     cmd = "NvimTreeToggle"
   },
-  {
-    'romgrk/barbar.nvim',
-    opts = {
-      animation = false,
-    },
-  },
+  -- {
+  --   'romgrk/barbar.nvim',
+  --   opts = {
+  --     animation = false,
+  --   },
+  -- },
 
   -- IDE
   {
@@ -239,9 +239,9 @@ keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
 
-keymap('n', '<tab>', ':BufferNext<CR>', opts)
-keymap('n', '<S-tab>', ':BufferPrevious<CR>', opts)
-keymap('n', '<leader>q', ':BufferClose<CR>', opts)
+-- keymap('n', '<tab>', ':ls<CR>:b<Space>', opts)
+-- keymap('n', '<S-tab>', ':BufferPrevious<CR>', opts)
+-- keymap('n', '<leader>q', ':bd<CR>', opts)
 
 keymap('n', 'K', vim.lsp.buf.hover, opts)
 keymap('n', 'J', vim.diagnostic.open_float, opts)
@@ -317,7 +317,7 @@ vim.opt.relativenumber = false
 vim.opt.numberwidth = 4
 vim.opt.signcolumn = 'yes'
 vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
+vim.opt.sidescrolloff = 4
 vim.opt.foldmethod = 'indent'
 vim.opt.foldlevel = 99
 vim.opt.laststatus = 3
