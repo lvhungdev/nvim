@@ -28,12 +28,12 @@ require('lazy').setup({
     cmd = 'Telescope',
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       filters = { dotfiles = false },
-      disable_netrw = true,
-      hijack_netrw = true,
+      disable_netrw = false,
+      hijack_netrw = false,
       hijack_cursor = true,
       hijack_unnamed_buffer_when_opening = false,
       sync_root_with_cwd = true,
@@ -43,7 +43,7 @@ require('lazy').setup({
       },
       view = {
         adaptive_size = false,
-        side = "right",
+        side = 'right',
         width = 40,
       },
       git = {
@@ -58,7 +58,7 @@ require('lazy').setup({
       diagnostics = { enable = true },
       renderer = {
         highlight_git = true,
-        highlight_opened_files = "none",
+        highlight_opened_files = 'none',
         indent_markers = { enable = false },
         full_name = true,
         special_files = {},
@@ -72,14 +72,8 @@ require('lazy').setup({
         },
       },
     },
-    cmd = "NvimTreeToggle"
+    cmd = 'NvimTreeToggle'
   },
-  -- {
-  --   'romgrk/barbar.nvim',
-  --   opts = {
-  --     animation = false,
-  --   },
-  -- },
 
   -- IDE
   {
@@ -116,7 +110,7 @@ require('lazy').setup({
       },
     },
   },
-  { "akinsho/toggleterm.nvim" },
+  { 'akinsho/toggleterm.nvim' },
 })
 
 -- Setups
@@ -217,8 +211,8 @@ keymap('n', '<A-j>', ':m .+1<CR>==', opts)
 keymap('n', '<A-k>', ':m .-2<CR>==', opts)
 keymap('v', '<A-j>', ':m .+1<CR>==', opts)
 keymap('v', '<A-k>', ':m .-2<CR>==', opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap('x', '<A-j>', ":move '>+1<CR>gv-gv", opts)
+keymap('x', '<A-k>', ":move '<-2<CR>gv-gv", opts)
 
 keymap('n', 's', function()
   local current_window = vim.fn.win_getid()
@@ -230,18 +224,14 @@ keymap('x', 's', function()
   require('leap').leap({ target_windows = { current_window } })
 end)
 
-keymap("n", "<leader>/", "gcc", { remap = true, silent = true })
-keymap("v", "<leader>/", "gc", { remap = true, silent = true })
+keymap('n', '<leader>/', 'gcc', { remap = true, silent = true })
+keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
 
-keymap('n', '<leader>f', ':Telescope find_files<cr>', opts)
-keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
-keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
+keymap('n', '<leader>f', ':Telescope find_files<CR>', opts)
+keymap('n', '<leader>w', ':Telescope live_grep<CR>', opts)
+keymap('n', '<leader>ld', ':Telescope diagnostics<CR>', opts)
 
-keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
-
--- keymap('n', '<tab>', ':ls<CR>:b<Space>', opts)
--- keymap('n', '<S-tab>', ':BufferPrevious<CR>', opts)
--- keymap('n', '<leader>q', ':bd<CR>', opts)
+keymap('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
 
 keymap('n', 'K', vim.lsp.buf.hover, opts)
 keymap('n', 'J', vim.diagnostic.open_float, opts)
@@ -262,13 +252,13 @@ keymap('v', '<leader>lf',
   opts
 )
 
-keymap("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", opts)
-keymap("n", "<leader>gl", ":Gitsigns blame_line<CR>", opts)
-keymap("n", "<leader>gr", ":Gitsigns reset_hunk<CR>", opts)
-keymap("n", "<leader>gR", ":Gitsigns reset_buffer<CR>", opts)
+keymap('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
+keymap('n', '<leader>gl', ':Gitsigns blame_line<CR>', opts)
+keymap('n', '<leader>gr', ':Gitsigns reset_hunk<CR>', opts)
+keymap('n', '<leader>gR', ':Gitsigns reset_buffer<CR>', opts)
 
-keymap("t", "<C-x>", "<C-\\><C-n>", opts)
-keymap("n", "<leader>tf", ":ToggleTerm direction=float<CR>", opts)
+keymap('t', '<C-x>', '<C-\\><C-n>', opts)
+keymap('n', '<leader>tf', ':ToggleTerm direction=float<CR>', opts)
 
 ---@diagnostic disable-next-line: lowercase-global
 function _lazygit_toggle()
@@ -292,7 +282,7 @@ function _terminal_two_toggle()
   local term_2 = Terminal:new {
     cmd = nil,
     hidden = true,
-    direction = "horizontal",
+    direction = 'horizontal',
     on_open = function(_)
       vim.cmd 'startinsert!'
     end,
