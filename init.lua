@@ -32,8 +32,8 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       filters = { dotfiles = false },
-      disable_netrw = false,
-      hijack_netrw = false,
+      disable_netrw = true,
+      hijack_netrw = true,
       hijack_cursor = true,
       hijack_unnamed_buffer_when_opening = false,
       sync_root_with_cwd = true,
@@ -73,6 +73,10 @@ require('lazy').setup({
       },
     },
     cmd = 'NvimTreeToggle'
+  },
+  {
+    'romgrk/barbar.nvim',
+    opts = { animation = false },
   },
 
   -- IDE
@@ -227,11 +231,15 @@ end)
 keymap('n', '<leader>/', 'gcc', { remap = true, silent = true })
 keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
 
-keymap('n', '<leader>f', ':Telescope find_files<CR>', opts)
-keymap('n', '<leader>w', ':Telescope live_grep<CR>', opts)
-keymap('n', '<leader>ld', ':Telescope diagnostics<CR>', opts)
+keymap('n', '<leader>f', ':Telescope find_files<cr>', opts)
+keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
+keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
-keymap('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
+keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
+
+keymap('n', '<tab>', ':BufferNext<CR>', opts)
+keymap('n', '<S-tab>', ':BufferPrevious<CR>', opts)
+keymap('n', '<leader>q', ':BufferClose<CR>', opts)
 
 keymap('n', 'K', vim.lsp.buf.hover, opts)
 keymap('n', 'J', vim.diagnostic.open_float, opts)
