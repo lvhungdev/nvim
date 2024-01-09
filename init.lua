@@ -15,7 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- Editing
   { 'Mofiqul/vscode.nvim' },
-  { 'ThePrimeagen/harpoon',  branch = 'harpoon2' },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
   { 'tpope/vim-surround', },
   { 'ggandor/leap.nvim' },
@@ -130,14 +129,16 @@ require('telescope').setup({
     },
     sorting_strategy = 'ascending',
     mappings = {
-      i = { ['<esc>'] = telescope_actions.close },
+      i = {
+        ['<Esc>'] = telescope_actions.close,
+        ['<Tab>'] = telescope_actions.close,
+        ['<C-q>'] = telescope_actions.delete_buffer,
+      },
     },
     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    path_display = 'tail',
   },
 })
-
-local harpoon = require("harpoon")
-harpoon:setup()
 
 require('mason').setup()
 require('mason-lspconfig').setup()
@@ -230,13 +231,10 @@ keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
 
 keymap('n', '<leader>f', ':Telescope find_files<cr>', opts)
 keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
+keymap('n', '<Tab>', ':Telescope buffers<cr>', opts)
 keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
-
-vim.keymap.set('n', '<tab>', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-vim.keymap.set('n', '<leader>ha', function() harpoon:list():append() end)
-vim.keymap.set('n', '<leader>hr', function() harpoon:list():remove() end)
 
 keymap('n', 'K', vim.lsp.buf.hover, opts)
 keymap('n', 'J', vim.diagnostic.open_float, opts)
