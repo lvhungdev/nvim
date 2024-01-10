@@ -13,6 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugins
 require('lazy').setup({
+
   -- Editing
   { 'Mofiqul/vscode.nvim' },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
@@ -93,6 +94,13 @@ require('lazy').setup({
     },
     event = 'InsertEnter',
   },
+  { 'jose-elias-alvarez/null-ls.nvim' },
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      'rcarriga/nvim-dap-ui',
+    }
+  },
   {
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -131,7 +139,7 @@ require('telescope').setup({
     mappings = {
       i = {
         ['<Esc>'] = telescope_actions.close,
-        ['<Tab>'] = telescope_actions.close,
+        ['<S-t>'] = telescope_actions.close,
         ['<C-q>'] = telescope_actions.delete_buffer,
       },
     },
@@ -152,6 +160,7 @@ lspconfig.dartls.setup({
 })
 lspconfig.gopls.setup({})
 lspconfig.tsserver.setup({})
+lspconfig.rust_analyzer.setup({})
 
 local cmp = require('cmp')
 cmp.setup({
@@ -175,6 +184,43 @@ cmp.setup({
   }, {
   })
 })
+
+local null_ls = require('null-ls')
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.code_actions.eslint_d,
+  }
+})
+
+require('dapui').setup()
+local dap, dapui = require('dap'), require('dapui')
+dap.listeners.before.attach.dapui_config = function() dapui.open() end
+dap.listeners.before.launch.dapui_config = function() dapui.open() end
+dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
+dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+
+dap.adapters.codelldb = {
+  type = 'server',
+  port = '${port}',
+  executable = {
+    command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+    args = { '--port', '${port}' },
+  }
+}
+dap.configurations.rust = {
+  {
+    name = 'Launch file',
+    type = 'codelldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopAtEntry = true,
+  },
+}
 
 -- Keymaps
 local keymap = vim.keymap.set
@@ -231,7 +277,7 @@ keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
 
 keymap('n', '<leader>f', ':Telescope find_files<cr>', opts)
 keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
-keymap('n', '<Tab>', ':Telescope buffers<cr>', opts)
+keymap('n', '<S-t>', ':Telescope buffers<cr>', opts)
 keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
@@ -254,6 +300,13 @@ keymap('v', '<leader>lf',
   function() vim.lsp.buf.format { async = true, range = { ['start'] = vim.api.nvim_buf_get_mark(0, '<'), ['end'] = vim.api.nvim_buf_get_mark(0, '>') } } end,
   opts
 )
+
+keymap('n', '<leader>db', ':DapToggleBreakpoint<CR>', opts)
+keymap('n', '<leader>dc', ':DapContinue<CR>', opts)
+keymap('n', '<leader>dt', ':DapTerminate<CR>', opts)
+keymap('n', '<leader>dn', ':DapStepOver<CR>', opts)
+keymap('n', '<leader>di', ':DapStepInto<CR>', opts)
+keymap('n', '<leader>do', ':DapStepOut<CR>', opts)
 
 keymap('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
 keymap('n', '<leader>gl', ':Gitsigns blame_line<CR>', opts)
