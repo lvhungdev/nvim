@@ -161,6 +161,11 @@ lspconfig.dartls.setup({
 lspconfig.gopls.setup({})
 lspconfig.tsserver.setup({})
 lspconfig.rust_analyzer.setup({})
+lspconfig.omnisharp.setup({
+  cmd = { 'dotnet', vim.fn.stdpath('data') .. '/mason/packages/omnisharp/libexec/OmniSharp.dll' },
+  organize_imports_on_format = true,
+  enable_roslyn_analyzers = true,
+})
 
 local cmp = require('cmp')
 cmp.setup({
