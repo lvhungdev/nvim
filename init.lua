@@ -37,25 +37,19 @@ require('lazy').setup({
       disable_netrw = true,
       hijack_netrw = true,
       hijack_cursor = true,
-      hijack_unnamed_buffer_when_opening = false,
       sync_root_with_cwd = true,
-      update_focused_file = {
-        enable = true,
-        update_root = false,
-      },
+      update_focused_file = { enable = true },
       view = {
         adaptive_size = false,
         side = 'right',
         width = 40,
       },
-      git = {
-        enable = true,
-        timeout = 2500,
-        -- ignore = true,
-      },
-      filesystem_watchers = { enable = true },
+      git = { timeout = 2500 },
       actions = {
-        open_file = { resize_window = true },
+        open_file = {
+          resize_window = true,
+          window_picker = { enable = false },
+        },
       },
       diagnostics = { enable = true },
       renderer = {
@@ -102,23 +96,7 @@ require('lazy').setup({
       'rcarriga/nvim-dap-ui',
     }
   },
-  {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signcolumn          = true,
-      watch_gitdir        = {
-        interval = 1000,
-        follow_files = true
-      },
-      attach_to_untracked = true,
-      sign_priority       = 6,
-      update_debounce     = 100,
-      max_file_length     = 40000, -- Disable if file is longer than this (in lines)
-      yadm                = {
-        enable = false
-      },
-    },
-  },
+  { 'lewis6991/gitsigns.nvim',        opts = {} },
   { 'nvim-treesitter/nvim-treesitter' },
 })
 
@@ -141,7 +119,6 @@ require('telescope').setup({
     mappings = {
       i = {
         ['<Esc>'] = telescope_actions.close,
-        ['<S-t>'] = telescope_actions.close,
         ['<C-q>'] = telescope_actions.delete_buffer,
       },
     },
@@ -289,7 +266,7 @@ keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
 
 keymap('n', '<leader>f', ':Telescope find_files<cr>', opts)
 keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
-keymap('n', '<S-t>', ':Telescope buffers<cr>', opts)
+keymap('n', '<C-e>', ':Telescope buffers<cr>', opts)
 keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
@@ -356,3 +333,5 @@ augroup highlight_yank
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200}
 augroup END
 ]]
+
+vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = '#1C1C1C', fg = '#5F87AF' })
