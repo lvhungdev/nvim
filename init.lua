@@ -16,7 +16,7 @@ require('lazy').setup({
 
   -- Editing
   -- { 'Mofiqul/vscode.nvim' },
-  { 'lunarvim/darkplus.nvim' },
+  -- { 'lunarvim/darkplus.nvim' },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
   { 'tpope/vim-surround', },
   { 'ggandor/leap.nvim' },
@@ -328,7 +328,7 @@ keymap('n', '<leader>gR', ':Gitsigns reset_buffer<CR>', opts)
 keymap('t', '<C-x>', '<C-\\><C-n>', opts)
 
 -- Options
-vim.cmd.colorscheme 'darkplus'
+vim.cmd.colorscheme 'habamax'
 vim.opt.backup = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.ignorecase = true
