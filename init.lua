@@ -15,7 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
   -- Editing
-  { 'Mofiqul/vscode.nvim' },
+  -- { 'Mofiqul/vscode.nvim' },
+  { 'lunarvim/darkplus.nvim' },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
   { 'tpope/vim-surround', },
   { 'ggandor/leap.nvim' },
@@ -118,6 +119,7 @@ require('lazy').setup({
       },
     },
   },
+  { 'nvim-treesitter/nvim-treesitter' },
 })
 
 -- Setups
@@ -227,6 +229,11 @@ dap.configurations.rust = {
   },
 }
 
+require('nvim-treesitter.configs').setup({
+  auto_install = true,
+  highlight = { enable = true }
+})
+
 -- Keymaps
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
@@ -321,7 +328,7 @@ keymap('n', '<leader>gR', ':Gitsigns reset_buffer<CR>', opts)
 keymap('t', '<C-x>', '<C-\\><C-n>', opts)
 
 -- Options
-vim.cmd.colorscheme 'vscode'
+vim.cmd.colorscheme 'darkplus'
 vim.opt.backup = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.ignorecase = true
