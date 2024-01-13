@@ -334,4 +334,6 @@ augroup highlight_yank
 augroup END
 ]]
 
+-- Highlights for habamax colorscheme
 vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = '#1C1C1C', fg = '#5F87AF' })
+vim.api.nvim_set_hl(0, 'WinSeparator', { bg = '#1C1C1C' })
