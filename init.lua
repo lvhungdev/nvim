@@ -123,7 +123,7 @@ require('telescope').setup({
       },
     },
     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-    path_display = 'tail',
+    path_display = { 'tail', 'truncate' },
   },
 })
 
@@ -175,6 +175,7 @@ null_ls.setup({
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.formatting.csharpier,
   }
 })
 
@@ -274,16 +275,14 @@ keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
 keymap('n', 'K', vim.lsp.buf.hover, opts)
 keymap('n', 'J', vim.diagnostic.open_float, opts)
 keymap('n', 'gD', vim.lsp.buf.declaration, opts)
-keymap('n', 'gd', ':Telescope lsp_definitions<CR>', opts)
-keymap('n', 'gi', ':Telescope lsp_implementations<CR>', opts)
-keymap('n', 'gr', ':Telescope lsp_references<CR>', opts)
+keymap('n', 'gd', vim.lsp.buf.definition, opts)
+keymap('n', 'gi', vim.lsp.buf.implementation, opts)
+keymap('n', 'gr', vim.lsp.buf.references, opts)
 keymap('n', '[d', vim.diagnostic.goto_prev, opts)
 keymap('n', ']d', vim.diagnostic.goto_next, opts)
 keymap('n', '<leader>ls', vim.lsp.buf.signature_help, opts)
-keymap('n', '<leader>D', vim.lsp.buf.type_definition, opts)
 keymap('n', '<leader>r', vim.lsp.buf.rename, opts)
 keymap('n', '<leader>a', vim.lsp.buf.code_action, opts)
-keymap('n', '<leader>lg', vim.diagnostic.setloclist, opts)
 keymap('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
 keymap('v', '<leader>lf',
   function() vim.lsp.buf.format { async = true, range = { ['start'] = vim.api.nvim_buf_get_mark(0, '<'), ['end'] = vim.api.nvim_buf_get_mark(0, '>') } } end,
@@ -301,6 +300,8 @@ keymap('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
 keymap('n', '<leader>gl', ':Gitsigns blame_line<CR>', opts)
 keymap('n', '<leader>gr', ':Gitsigns reset_hunk<CR>', opts)
 keymap('n', '<leader>gR', ':Gitsigns reset_buffer<CR>', opts)
+keymap('n', ']g', ':Gitsigns next_hunk<CR>', opts)
+keymap('n', '[g', ':Gitsigns prev_hunk<CR>', opts)
 
 keymap('t', '<C-x>', '<C-\\><C-n>', opts)
 
@@ -320,8 +321,8 @@ vim.opt.sidescrolloff = 4
 vim.opt.foldmethod = 'indent'
 vim.opt.foldlevel = 99
 vim.opt.laststatus = 3
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
+vim.opt.updatetime = 1000
+vim.opt.timeoutlen = 750
 vim.opt.termguicolors = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
