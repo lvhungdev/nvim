@@ -119,7 +119,8 @@ require('telescope').setup({
     mappings = {
       i = {
         ['<Esc>'] = telescope_actions.close,
-        ['<C-q>'] = telescope_actions.delete_buffer,
+        ['<C-s>'] = telescope_actions.send_to_qflist,
+        ['<C-x>'] = telescope_actions.delete_buffer,
       },
     },
     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
