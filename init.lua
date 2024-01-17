@@ -17,7 +17,6 @@ require('lazy').setup({
   -- Editing
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
   { 'tpope/vim-surround', },
-  -- { 'ggandor/leap.nvim' },
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Navigations
@@ -133,7 +132,6 @@ lspconfig.gopls.setup({})
 lspconfig.tsserver.setup({})
 lspconfig.rust_analyzer.setup({})
 lspconfig.omnisharp.setup({
-  cmd = { 'dotnet', vim.fn.stdpath('data') .. '/mason/packages/omnisharp/libexec/OmniSharp.dll' },
   -- handlers = {
   --   ["textDocument/definition"] = require('omnisharp_extended').handler,
   -- },
