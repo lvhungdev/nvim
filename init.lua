@@ -15,8 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
   -- Editing
-  -- { 'Mofiqul/vscode.nvim' },
-  -- { 'lunarvim/darkplus.nvim' },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
   { 'tpope/vim-surround', },
   -- { 'ggandor/leap.nvim' },
@@ -102,13 +100,6 @@ require('lazy').setup({
 })
 
 -- Setups
--- local leap = require('leap')
--- leap.opts.labels = {
---   's', 'f', 'n',
---   'j', 'k', 'l', 'h', 'o', 'd', 'w', 'e', 'i', 'm', 'b', 'u',
---   'y', 'v', 'r', 'g', 't', 'a', 'q', 'p', 'c', 'x', 'z',
--- }
-
 local telescope_actions = require('telescope.actions')
 require('telescope').setup({
   defaults = {
@@ -255,16 +246,6 @@ keymap('v', '<A-j>', ':m .+1<CR>==', opts)
 keymap('v', '<A-k>', ':m .-2<CR>==', opts)
 keymap('x', '<A-j>', ":move '>+1<CR>gv-gv", opts)
 keymap('x', '<A-k>', ":move '<-2<CR>gv-gv", opts)
-
-keymap('n', 's', function()
-  local current_window = vim.fn.win_getid()
-  require('leap').leap({ target_windows = { current_window } })
-end)
-
-keymap('x', 's', function()
-  local current_window = vim.fn.win_getid()
-  require('leap').leap({ target_windows = { current_window } })
-end)
 
 keymap('n', '<leader>/', 'gcc', { remap = true, silent = true })
 keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
