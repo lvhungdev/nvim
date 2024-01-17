@@ -19,7 +19,7 @@ require('lazy').setup({
   -- { 'lunarvim/darkplus.nvim' },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
   { 'tpope/vim-surround', },
-  { 'ggandor/leap.nvim' },
+  -- { 'ggandor/leap.nvim' },
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Navigations
@@ -102,12 +102,12 @@ require('lazy').setup({
 })
 
 -- Setups
-local leap = require('leap')
-leap.opts.labels = {
-  's', 'f', 'n',
-  'j', 'k', 'l', 'h', 'o', 'd', 'w', 'e', 'i', 'm', 'b', 'u',
-  'y', 'v', 'r', 'g', 't', 'a', 'q', 'p', 'c', 'x', 'z',
-}
+-- local leap = require('leap')
+-- leap.opts.labels = {
+--   's', 'f', 'n',
+--   'j', 'k', 'l', 'h', 'o', 'd', 'w', 'e', 'i', 'm', 'b', 'u',
+--   'y', 'v', 'r', 'g', 't', 'a', 'q', 'p', 'c', 'x', 'z',
+-- }
 
 local telescope_actions = require('telescope.actions')
 require('telescope').setup({
@@ -317,7 +317,7 @@ vim.opt.ignorecase = true
 vim.opt.expandtab = true
 vim.opt.cursorline = true
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.numberwidth = 4
 vim.opt.signcolumn = 'yes'
 vim.opt.scrolloff = 8
