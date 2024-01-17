@@ -77,6 +77,7 @@ require('lazy').setup({
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+      -- 'Hoffs/omnisharp-extended-lsp.nvim',
     },
   },
   {
@@ -119,7 +120,6 @@ require('telescope').setup({
     mappings = {
       i = {
         ['<Esc>'] = telescope_actions.close,
-        ['<C-s>'] = telescope_actions.send_to_qflist,
         ['<C-x>'] = telescope_actions.delete_buffer,
       },
     },
@@ -143,6 +143,9 @@ lspconfig.tsserver.setup({})
 lspconfig.rust_analyzer.setup({})
 lspconfig.omnisharp.setup({
   cmd = { 'dotnet', vim.fn.stdpath('data') .. '/mason/packages/omnisharp/libexec/OmniSharp.dll' },
+  -- handlers = {
+  --   ["textDocument/definition"] = require('omnisharp_extended').handler,
+  -- },
   organize_imports_on_format = true,
   enable_roslyn_analyzers = true,
 })
