@@ -314,8 +314,6 @@ vim.opt.numberwidth = 4
 vim.opt.signcolumn = 'yes'
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 4
-vim.opt.foldmethod = 'indent'
-vim.opt.foldlevel = 99
 vim.opt.laststatus = 3
 vim.opt.updatetime = 1000
 vim.opt.timeoutlen = 750
@@ -323,6 +321,10 @@ vim.opt.termguicolors = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.wrap = false
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod = 'expr'
+vim.opt.foldenable = false
+vim.opt.foldlevel = 99
 
 vim.cmd [[
 augroup highlight_yank
