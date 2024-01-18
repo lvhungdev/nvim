@@ -15,9 +15,9 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
   -- Editing
-  { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
-  { 'tpope/vim-surround', },
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'windwp/nvim-autopairs', event = { 'InsertEnter' },              opts = {} },
+  { 'tpope/vim-surround',    event = { 'BufReadPre', 'BufNewFile' } },
+  { 'numToStr/Comment.nvim', event = { 'BufReadPre', 'BufNewFile' }, opts = {} },
 
   -- Navigations
   {
@@ -25,10 +25,31 @@ require('lazy').setup({
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = 'Telescope',
+    config = function()
+      local telescope_actions = require('telescope.actions')
+      require('telescope').setup({
+        defaults = {
+          layout_strategy = 'horizontal',
+          layout_config = {
+            horizontal = { prompt_position = 'top' },
+          },
+          sorting_strategy = 'ascending',
+          mappings = {
+            i = {
+              ['<Esc>'] = telescope_actions.close,
+              ['<C-x>'] = telescope_actions.delete_buffer,
+            },
+          },
+          borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+          path_display = { 'tail', 'truncate' },
+        },
+      })
+    end
   },
   {
     'nvim-tree/nvim-tree.lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+    cmd = 'NvimTreeToggle',
     opts = {
       filters = { dotfiles = false },
       disable_netrw = true,
@@ -65,7 +86,6 @@ require('lazy').setup({
         },
       },
     },
-    cmd = 'NvimTreeToggle'
   },
 
   -- IDE
@@ -74,8 +94,33 @@ require('lazy').setup({
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      -- 'Hoffs/omnisharp-extended-lsp.nvim',
+      'Hoffs/omnisharp-extended-lsp.nvim',
     },
+    event = { 'BufReadPre', 'BufNewFile' },
+    cmd = { 'Mason' },
+    config = function()
+      require('mason').setup()
+      require('mason-lspconfig').setup()
+
+      local lspconfig = require('lspconfig')
+      lspconfig.lua_ls.setup({})
+      lspconfig.dartls.setup({
+        settings = {
+          dart = { lineLength = 120 }
+        }
+      })
+      lspconfig.gopls.setup({})
+      lspconfig.tsserver.setup({})
+      lspconfig.rust_analyzer.setup({})
+      lspconfig.omnisharp.setup({
+        handlers = {
+          ["textDocument/definition"] = require('omnisharp_extended').handler,
+        },
+        organize_imports_on_format = true,
+        enable_roslyn_analyzers = true,
+      })
+      lspconfig.bicep.setup({})
+    end
   },
   {
     'hrsh7th/nvim-cmp',
@@ -85,124 +130,92 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'L3MON4D3/LuaSnip',
     },
-    event = 'InsertEnter',
-  },
-  { 'jose-elias-alvarez/null-ls.nvim' },
-  {
-    'mfussenegger/nvim-dap',
-    dependencies = {
-      'rcarriga/nvim-dap-ui',
-    }
-  },
-  { 'lewis6991/gitsigns.nvim',        opts = {} },
-  { 'nvim-treesitter/nvim-treesitter' },
-})
-
--- Setups
-local telescope_actions = require('telescope.actions')
-require('telescope').setup({
-  defaults = {
-    layout_strategy = 'horizontal',
-    layout_config = {
-      horizontal = { prompt_position = 'top' },
-    },
-    sorting_strategy = 'ascending',
-    mappings = {
-      i = {
-        ['<Esc>'] = telescope_actions.close,
-        ['<C-x>'] = telescope_actions.delete_buffer,
-      },
-    },
-    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-    path_display = { 'tail', 'truncate' },
-  },
-})
-
-require('mason').setup()
-require('mason-lspconfig').setup()
-
-local lspconfig = require('lspconfig')
-lspconfig.lua_ls.setup({})
-lspconfig.dartls.setup({
-  settings = {
-    dart = { lineLength = 120 }
-  }
-})
-lspconfig.gopls.setup({})
-lspconfig.tsserver.setup({})
-lspconfig.rust_analyzer.setup({})
-lspconfig.omnisharp.setup({
-  -- handlers = {
-  --   ["textDocument/definition"] = require('omnisharp_extended').handler,
-  -- },
-  organize_imports_on_format = true,
-  enable_roslyn_analyzers = true,
-})
-
-local cmp = require('cmp')
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+    event = { 'InsertEnter' },
+    config = function()
+      local cmp = require('cmp')
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+          end
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-d>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          },
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' }
+        }, {
+        })
+      })
     end
   },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lsp_signature_help' }
-  }, {
-  })
-})
-
-local null_ls = require('null-ls')
-null_ls.setup({
-  sources = {
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.code_actions.eslint_d,
-    null_ls.builtins.formatting.csharpier,
-  }
-})
-
-require('dapui').setup()
-local dap, dapui = require('dap'), require('dapui')
-dap.listeners.before.attach.dapui_config = function() dapui.open() end
-dap.listeners.before.launch.dapui_config = function() dapui.open() end
-dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
-dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
-
-dap.adapters.codelldb = {
-  type = 'server',
-  port = '${port}',
-  executable = {
-    command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
-    args = { '--port', '${port}' },
-  }
-}
-dap.configurations.rust = {
   {
-    name = 'Launch file',
-    type = 'codelldb',
-    request = 'launch',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
+    'jose-elias-alvarez/null-ls.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      local null_ls = require('null-ls')
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.prettier,
+          null_ls.builtins.diagnostics.eslint_d,
+          null_ls.builtins.code_actions.eslint_d,
+          null_ls.builtins.formatting.csharpier,
+        }
+      })
+    end
   },
-}
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = { 'rcarriga/nvim-dap-ui' },
+    cmd = { 'DapToggleBreakpoint', 'DapContinue' },
+    config = function()
+      require('dapui').setup()
+      local dap, dapui = require('dap'), require('dapui')
+      dap.listeners.before.attach.dapui_config = function() dapui.open() end
+      dap.listeners.before.launch.dapui_config = function() dapui.open() end
+      dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
+      dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 
-require('nvim-treesitter.configs').setup({
-  auto_install = true,
-  highlight = { enable = true }
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+          args = { '--port', '${port}' },
+        }
+      }
+      dap.configurations.rust = {
+        {
+          name = 'Launch file',
+          type = 'codelldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopAtEntry = true,
+        },
+      }
+    end
+  },
+  { 'lewis6991/gitsigns.nvim', opts = {} },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        auto_install = true,
+        highlight = { enable = true }
+      })
+    end
+  },
 })
 
 -- Keymaps
