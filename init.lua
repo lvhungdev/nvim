@@ -120,6 +120,7 @@ require('lazy').setup({
         enable_roslyn_analyzers = true,
       })
       lspconfig.bicep.setup({})
+      lspconfig.clangd.setup({})
     end
   },
   {
@@ -276,9 +277,11 @@ keymap('n', 'gi', vim.lsp.buf.implementation, opts)
 keymap('n', 'gr', vim.lsp.buf.references, opts)
 keymap('n', '[d', vim.diagnostic.goto_prev, opts)
 keymap('n', ']d', vim.diagnostic.goto_next, opts)
-keymap('n', '<leader>ls', vim.lsp.buf.signature_help, opts)
-keymap('n', '<leader>r', vim.lsp.buf.rename, opts)
 keymap('n', '<leader>a', vim.lsp.buf.code_action, opts)
+keymap('n', '<leader>r', vim.lsp.buf.rename, opts)
+keymap('n', '<leader>ls', vim.lsp.buf.signature_help, opts)
+keymap('n', '<leader>lo', vim.lsp.buf.document_symbol, opts)
+keymap('n', '<leader>lO', vim.lsp.buf.workspace_symbol, opts)
 keymap('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
 keymap('v', '<leader>lf',
   function() vim.lsp.buf.format { async = true, range = { ['start'] = vim.api.nvim_buf_get_mark(0, '<'), ['end'] = vim.api.nvim_buf_get_mark(0, '>') } } end,
