@@ -121,6 +121,7 @@ require('lazy').setup({
       })
       lspconfig.bicep.setup({})
       lspconfig.clangd.setup({})
+      lspconfig.intelephense.setup({})
     end
   },
   {
@@ -328,7 +329,6 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldmethod = 'expr'
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
-vim.opt.cmdheight = 0
 
 vim.cmd [[
 augroup highlight_yank
