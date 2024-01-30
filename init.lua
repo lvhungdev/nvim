@@ -218,6 +218,22 @@ require('lazy').setup({
       })
     end
   },
+  { 'github/copilot.vim' },
+  {
+    'jellydn/CopilotChat.nvim',
+    opts = { mode = 'split' },
+    build = function()
+      vim.defer_fn(function()
+        vim.cmd('UpdateRemotePlugins')
+      end, 3000)
+    end,
+    event = 'VeryLazy',
+    keys = {
+      { '<leader>cc', ':CopilotChat ' },
+      { '<leader>ce', ':CopilotChatExplain<CR>' },
+      { '<leader>ct', ':CopilotChatTests<CR>' },
+    },
+  },
 })
 
 -- Keymaps
