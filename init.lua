@@ -341,6 +341,7 @@ vim.opt.termguicolors = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.wrap = true
+vim.opt.breakindent = true
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldmethod = 'expr'
 vim.opt.foldenable = false
