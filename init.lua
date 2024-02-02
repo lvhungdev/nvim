@@ -340,11 +340,13 @@ vim.opt.timeoutlen = 750
 vim.opt.termguicolors = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldmethod = 'expr'
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 vim.cmd [[
 augroup highlight_yank
