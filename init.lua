@@ -114,7 +114,7 @@ require('lazy').setup({
       lspconfig.rust_analyzer.setup({})
       lspconfig.omnisharp.setup({
         handlers = {
-          ["textDocument/definition"] = require('omnisharp_extended').handler,
+          ['textDocument/definition'] = require('omnisharp_extended').handler,
         },
         organize_imports_on_format = true,
         enable_roslyn_analyzers = true,
@@ -262,7 +262,7 @@ keymap('n', '<C-Down>', ':resize -2<CR>', opts)
 keymap('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 keymap('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
-keymap('n', '<leader>q', ':b#|bd#<CR>', opts)
+keymap('n', '<leader>q', ':bp|bd#<CR>', opts)
 
 keymap('n', '<ESC>', ':noh<CR>', opts)
 
@@ -344,7 +344,7 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.wrap = true
 vim.opt.breakindent = true
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
@@ -354,7 +354,7 @@ vim.opt.splitbelow = true
 vim.cmd [[
 augroup highlight_yank
     autocmd!
-    au TextYankPost * silent! lua vim.highlight.on_yank({ higroup="IncSearch", timeout=200 })
+    au TextYankPost * silent! lua vim.highlight.on_yank({ higroup='IncSearch', timeout=200 })
 augroup END
 ]]
 
