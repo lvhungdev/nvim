@@ -262,6 +262,8 @@ keymap('n', '<C-Down>', ':resize -2<CR>', opts)
 keymap('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 keymap('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
+keymap('n', '<leader>q', ':b#|bd#<CR>', opts)
+
 keymap('n', '<ESC>', ':noh<CR>', opts)
 
 keymap('n', '<', '<gv', opts)
