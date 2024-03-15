@@ -218,22 +218,22 @@ require('lazy').setup({
       })
     end
   },
-  { 'github/copilot.vim' },
-  {
-    'jellydn/CopilotChat.nvim',
-    opts = { mode = 'split' },
-    build = function()
-      vim.defer_fn(function()
-        vim.cmd('UpdateRemotePlugins')
-      end, 3000)
-    end,
-    event = 'VeryLazy',
-    keys = {
-      { '<leader>cc', ':CopilotChat ' },
-      { '<leader>ce', ':CopilotChatExplain<CR>' },
-      { '<leader>ct', ':CopilotChatTests<CR>' },
-    },
-  },
+  -- { 'github/copilot.vim' },
+  -- {
+  --   'jellydn/CopilotChat.nvim',
+  --   opts = { mode = 'split' },
+  --   build = function()
+  --     vim.defer_fn(function()
+  --       vim.cmd('UpdateRemotePlugins')
+  --     end, 3000)
+  --   end,
+  --   event = 'VeryLazy',
+  --   keys = {
+  --     { '<leader>cc', ':CopilotChat ' },
+  --     { '<leader>ce', ':CopilotChatExplain<CR>' },
+  --     { '<leader>ct', ':CopilotChatTests<CR>' },
+  --   },
+  -- },
 })
 
 -- Keymaps
@@ -261,8 +261,6 @@ keymap('n', '<C-Up>', ':resize +2<CR>', opts)
 keymap('n', '<C-Down>', ':resize -2<CR>', opts)
 keymap('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 keymap('n', '<C-Right>', ':vertical resize +2<CR>', opts)
-
-keymap('n', '<leader>q', ':bp|bd#<CR>', opts)
 
 keymap('n', '<ESC>', ':noh<CR>', opts)
 
