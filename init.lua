@@ -281,7 +281,7 @@ keymap('v', '<leader>/', 'gc', { remap = true, silent = true })
 
 keymap('n', '<leader>f', ':Telescope find_files<cr>', opts)
 keymap('n', '<leader>w', ':Telescope live_grep<cr>', opts)
-keymap('n', '<C-e>', ':Telescope buffers<cr>', opts)
+keymap('n', '<leader>p', ':Telescope buffers<cr>', opts)
 keymap('n', '<leader>ld', ':Telescope diagnostics<cr>', opts)
 
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
@@ -338,8 +338,8 @@ vim.opt.laststatus = 3
 vim.opt.updatetime = 1000
 vim.opt.timeoutlen = 750
 vim.opt.termguicolors = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 vim.opt.wrap = true
 vim.opt.breakindent = true
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
