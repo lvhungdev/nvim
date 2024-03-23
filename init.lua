@@ -175,7 +175,10 @@ require('lazy').setup({
   },
   {
     'mfussenegger/nvim-dap',
-    dependencies = { 'rcarriga/nvim-dap-ui' },
+    dependencies = {
+      'rcarriga/nvim-dap-ui',
+      'https://github.com/nvim-neotest/nvim-nio',
+    },
     cmd = { 'DapToggleBreakpoint', 'DapContinue' },
     config = function()
       require('dapui').setup()
@@ -205,6 +208,23 @@ require('lazy').setup({
           stopAtEntry = true,
         },
       }
+
+      dap.adapters.delve = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = 'dlv',
+          args = { 'dap', '-l', '127.0.0.1:${port}' },
+        }
+      }
+      dap.configurations.go = {
+        {
+          type = 'delve',
+          name = 'Debug',
+          request = 'launch',
+          program = '${file}'
+        },
+      }
     end
   },
   { 'lewis6991/gitsigns.nvim', opts = {} },
@@ -218,22 +238,6 @@ require('lazy').setup({
       })
     end
   },
-  -- { 'github/copilot.vim' },
-  -- {
-  --   'jellydn/CopilotChat.nvim',
-  --   opts = { mode = 'split' },
-  --   build = function()
-  --     vim.defer_fn(function()
-  --       vim.cmd('UpdateRemotePlugins')
-  --     end, 3000)
-  --   end,
-  --   event = 'VeryLazy',
-  --   keys = {
-  --     { '<leader>cc', ':CopilotChat ' },
-  --     { '<leader>ce', ':CopilotChatExplain<CR>' },
-  --     { '<leader>ct', ':CopilotChatTests<CR>' },
-  --   },
-  -- },
 })
 
 -- Keymaps
