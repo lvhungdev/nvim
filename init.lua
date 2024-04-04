@@ -41,7 +41,7 @@ require('lazy').setup({
             },
           },
           borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-          path_display = { 'tail', 'truncate' },
+          path_display = { 'truncate' },
         },
       })
     end
@@ -145,7 +145,7 @@ require('lazy').setup({
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm {
+          ['<tab>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           },
@@ -238,6 +238,7 @@ require('lazy').setup({
       })
     end
   },
+  { 'Exafunction/codeium.vim' },
 })
 
 -- Keymaps
