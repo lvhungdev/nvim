@@ -181,7 +181,19 @@ require('lazy').setup({
     },
     cmd = { 'DapToggleBreakpoint', 'DapContinue' },
     config = function()
-      require('dapui').setup()
+      require('dapui').setup({
+        layouts = {
+          {
+            elements = {
+              { id = "repl",    size = 0.4 },
+              { id = "scopes",  size = 0.4 },
+              { id = "watches", size = 0.2 }
+            },
+            position = "right",
+            size = 60
+          },
+        },
+      })
       local dap, dapui = require('dap'), require('dapui')
       dap.listeners.before.attach.dapui_config = function() dapui.open() end
       dap.listeners.before.launch.dapui_config = function() dapui.open() end
