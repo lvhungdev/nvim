@@ -131,15 +131,15 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'rafamadriz/friendly-snippets',
     },
     event = { 'InsertEnter' },
     config = function()
       local cmp = require('cmp')
       cmp.setup({
         snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end
+          expand = function(args) require('luasnip').lsp_expand(args.body) end
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -152,10 +152,13 @@ require('lazy').setup({
         }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
-          { name = 'nvim_lsp_signature_help' }
+          { name = 'nvim_lsp_signature_help' },
+          { name = 'luasnip' },
         }, {
         })
       })
+
+      require("luasnip.loaders.from_vscode").lazy_load()
     end
   },
   {
@@ -190,7 +193,7 @@ require('lazy').setup({
               { id = "watches", size = 0.2 }
             },
             position = "right",
-            size = 60
+            size = 50
           },
         },
       })
@@ -250,7 +253,6 @@ require('lazy').setup({
       })
     end
   },
-  { 'Exafunction/codeium.vim' },
 })
 
 -- Keymaps
@@ -322,12 +324,16 @@ keymap('v', '<leader>lf',
   opts
 )
 
+local ls = require('luasnip')
+keymap({ 'i', 's' }, '<Tab>', function() ls.jump(1) end, { silent = true })
+keymap({ 'i', 's' }, '<S-Tab>', function() ls.jump(-1) end, { silent = true })
+
 keymap('n', '<leader>db', ':DapToggleBreakpoint<CR>', opts)
 keymap('n', '<leader>dc', ':DapContinue<CR>', opts)
 keymap('n', '<leader>dt', ':DapTerminate<CR>', opts)
-keymap('n', '<leader>dn', ':DapStepOver<CR>', opts)
+keymap('n', '<leader>do', ':DapStepOver<CR>', opts)
 keymap('n', '<leader>di', ':DapStepInto<CR>', opts)
-keymap('n', '<leader>do', ':DapStepOut<CR>', opts)
+keymap('n', '<leader>dO', ':DapStepOut<CR>', opts)
 
 keymap('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
 keymap('n', '<leader>gl', ':Gitsigns blame_line<CR>', opts)
