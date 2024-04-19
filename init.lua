@@ -5,7 +5,7 @@ if not vim.loop.fs_stat(lazypath) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=stable',     -- latest stable release
     lazypath,
   }
 end
@@ -154,7 +154,6 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'nvim_lsp_signature_help' },
           { name = 'luasnip' },
-        }, {
         })
       })
 
@@ -320,13 +319,14 @@ keymap('n', '<leader>lo', vim.lsp.buf.document_symbol, opts)
 keymap('n', '<leader>lO', vim.lsp.buf.workspace_symbol, opts)
 keymap('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
 keymap('v', '<leader>lf',
-  function() vim.lsp.buf.format { async = true, range = { ['start'] = vim.api.nvim_buf_get_mark(0, '<'), ['end'] = vim.api.nvim_buf_get_mark(0, '>') } } end,
-  opts
-)
+  function()
+    vim.lsp.buf.format { async = true, range = { ['start'] = vim.api.nvim_buf_get_mark(0, '<'), ['end'] = vim.api.nvim_buf_get_mark(0, '>') } }
+  end,
+  opts)
 
 local ls = require('luasnip')
-keymap({ 'i', 's' }, '<Tab>', function() ls.jump(1) end, { silent = true })
-keymap({ 'i', 's' }, '<S-Tab>', function() ls.jump(-1) end, { silent = true })
+keymap({ 'i', 's' }, '<c-.>', function() ls.jump(1) end, { silent = true })
+keymap({ 'i', 's' }, '<c-,>', function() ls.jump(-1) end, { silent = true })
 
 keymap('n', '<leader>db', ':DapToggleBreakpoint<CR>', opts)
 keymap('n', '<leader>dc', ':DapContinue<CR>', opts)
@@ -381,4 +381,5 @@ augroup END
 
 -- Highlights for habamax colorscheme
 vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = '#1C1C1C', fg = '#5F87AF' })
+vim.api.nvim_set_hl(0, 'GitSignsAdd', { bg = '#1C1C1C', fg = '#87af87' })
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = '#1C1C1C' })
