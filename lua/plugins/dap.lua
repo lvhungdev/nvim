@@ -9,7 +9,7 @@ return {
   'mfussenegger/nvim-dap',
   dependencies = {
     'rcarriga/nvim-dap-ui',
-    'https://github.com/nvim-neotest/nvim-nio',
+    'nvim-neotest/nvim-nio',
   },
   cmd = { 'DapToggleBreakpoint', 'DapContinue' },
   config = function()
@@ -19,11 +19,11 @@ return {
       layouts = {
         {
           elements = {
-            { id = "repl",    size = 0.4 },
-            { id = "scopes",  size = 0.4 },
-            { id = "watches", size = 0.2 }
+            { id = 'repl',    size = 0.4 },
+            { id = 'scopes',  size = 0.4 },
+            { id = 'watches', size = 0.2 }
           },
-          position = "right",
+          position = 'right',
           size = 50
         },
       },

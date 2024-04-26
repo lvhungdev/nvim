@@ -63,6 +63,7 @@ return {
           highlight_opened_files = 'none',
           indent_markers = { enable = false },
           full_name = true,
+          group_empty = true,
           special_files = {},
           icons = {
             show = {

@@ -63,7 +63,7 @@ Keymap('x', '<a-k>', ":move '<-2<cr>gv-gv", MapOpts)
 vim.cmd [[
 augroup highlight_yank
     autocmd!
-    au TextYankPost * silent! lua vim.highlight.on_yank({ higroup='IncSearch', timeout=200 })
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank({ higroup='IncSearch', timeout=200 })
 augroup END
 ]]
 
