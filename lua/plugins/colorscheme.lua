@@ -1,29 +1,15 @@
-vim.cmd.colorscheme('habamax')
-vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = '#1C1C1C', fg = '#5F87AF' })
-vim.api.nvim_set_hl(0, 'GitSignsAdd', { bg = '#1C1C1C', fg = '#87af87' })
-vim.api.nvim_set_hl(0, 'WinSeparator', { bg = '#1C1C1C' })
+-- vim.cmd.colorscheme('habamax')
+-- vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = 'none', fg = '#5f87af' })
+-- vim.api.nvim_set_hl(0, 'GitSignsAdd', { bg = 'none', fg = '#87af87' })
+-- vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, '@lsp.type.function', { fg = '#5F8787' })
 
-return {
-  -- {
-  --   'catppuccin/nvim',
-  --   name = 'catppuccin',
-  --   config = function()
-  --     require('catppuccin').setup({
-  --       no_italic = true,
-  --     })
-  --
-  --     vim.cmd.colorscheme('catppuccin')
-  --   end
-  -- },
+-- return {}
 
-  {
-    'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        auto_install = true,
-        highlight = { enable = true }
-      })
-    end
-  },
+return
+{
+  'sainnhe/gruvbox-material',
+  config = function()
+    vim.cmd.colorscheme('gruvbox-material')
+  end
 }

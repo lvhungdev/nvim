@@ -41,7 +41,11 @@ return {
           dart = { lineLength = 120 }
         }
       })
-      lspconfig.gopls.setup({})
+      lspconfig.gopls.setup({
+        settings = {
+          gopls = { semanticTokens = true },
+        },
+      })
       lspconfig.tsserver.setup({})
       lspconfig.rust_analyzer.setup({})
       lspconfig.omnisharp.setup({})

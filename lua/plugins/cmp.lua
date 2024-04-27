@@ -30,7 +30,7 @@ return {
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' },
-      })
+      }),
     })
 
     require("luasnip.loaders.from_vscode").lazy_load()
@@ -38,5 +38,4 @@ return {
     Keymap({ 'i', 's' }, '<c-.>', function() ls.jump(1) end, MapOpts)
     Keymap({ 'i', 's' }, '<c-,>', function() ls.jump(-1) end, MapOpts)
   end
-
 }
