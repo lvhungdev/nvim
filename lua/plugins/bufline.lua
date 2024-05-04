@@ -24,8 +24,8 @@ local function get_buf_list()
   return buf_list
 end
 
+BUFLINE_OFFSET = 1
 local function get_bufline()
-  BUFLINE_OFFSET = 1
   local width = vim.opt.columns['_value'] - 12
   local line = ''
   local curr_start_index = -1
@@ -54,8 +54,8 @@ local function get_bufline()
 
   if curr_start_index < BUFLINE_OFFSET then
     BUFLINE_OFFSET = curr_start_index
-  elseif curr_end_index > BUFLINE_OFFSET + width then
-    BUFLINE_OFFSET = BUFLINE_OFFSET + curr_end_index - BUFLINE_OFFSET - width
+  elseif curr_end_index > BUFLINE_OFFSET + width + 1 then
+    BUFLINE_OFFSET = curr_end_index - width + 1
   end
 
   return string.sub(line, BUFLINE_OFFSET, BUFLINE_OFFSET + width - 1)
