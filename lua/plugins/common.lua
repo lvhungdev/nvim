@@ -20,13 +20,8 @@ vim.opt.breakindent = true
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldenable = false
-vim.opt.foldlevel = 99
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
-Keymap('', '<space>', '<nop>', MapOpts)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 
 Keymap('n', 'c', '"_c', MapOpts)
 Keymap('n', 'C', '"_C', MapOpts)
